@@ -14,12 +14,62 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script type="text/babel"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"
-    ></script>
-    <script src="index.js"></script>
+    <script type="text/babel">
+      const appRoot = document.querySelector('#application-root');
+
+      const Contact = props => {
+        console.log(props);
+
+        return (
+          <section id="profile">
+            <h3 className="sectionTitle">Contact Information</h3>
+            <div id="profilePhoto">
+              <img
+                src={props.photo}
+                alt={`${props.name}'s photo`}
+                className="responsiveImg"
+              />
+            </div>
+            <div id="contactInfo">
+              <address>
+                <strong>Email: </strong>
+                <a href={`mailto:${props.contactInfo.email}`}>
+                  {props.contactInfo.email}
+                </a>
+                <br />
+                <strong>Phone: </strong>
+                <a href="tel:+13035555555">303-555-5555</a>
+              </address>
+            </div>
+          </section>
+        );
+      };
+
+      const user = {
+        name: 'Sally',
+        photo:
+          'https://m.media-amazon.com/images/M/MV5BMTY5NzE3NzU3MF5BMl5BanBnXkFtZTgwMjg0NTQ5MDE@._V1_.jpg',
+        contactInfo: {
+          email: 'sallystudent@stu.edu',
+          phone: '303-555-5555'
+        }
+      };
+
+      const App = props => {
+        console.log('Applicaiton is running...');
+
+        return (
+          <main id="app">
+            <header>
+              <h1>Resume App</h1>
+            </header>
+
+            <Contact name={props.name} photo={props.photo} />
+          </main>
+        );
+      };
+
+      ReactDOM.render(<App name={user.name} photo={user.photo} />, appRoot);
+    </script>
   </body>
 </html>
