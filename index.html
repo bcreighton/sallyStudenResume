@@ -1,79 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Student Resume</title>
 
-    <link rel="stylesheet" href="main.css" />
-  </head>
-  <body>
-    <div id="application-root"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Student Resume</title>
 
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script type="text/babel">
-      const appRoot = document.querySelector('#application-root');
+  <link rel="stylesheet" href="main.css" />
+</head>
 
-      const Contact = props => {
-        debugger;
-        console.log(props);
+<body>
+  <div id="application-root"></div>
 
-        return (
-          <section id="profile">
-            <h3 className="sectionTitle">Contact Information</h3>
-            <div id="profilePhoto">
-              <img
-                src={props.photo}
-                alt={`${props.name}'s photo`}
-                className="responsiveImg"
-              />
-            </div>
-            <div id="contactInfo">
-              <address>
-                <strong>Email: </strong>
-                <a href={`mailto:${props.contactInfo.email}`}>
-                  {props.contactInfo.email}
-                </a>
-                <br />
-                <strong>Phone: </strong>
-                <a href="tel:+13035555555">303-555-5555</a>
-              </address>
-            </div>
-          </section>
-        );
-      };
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script type="text/babel">
+    const appRoot = document.querySelector('#application-root');
 
-      const user = {
-        name: 'Sally',
-        photo:
-          'https://m.media-amazon.com/images/M/MV5BMTY5NzE3NzU3MF5BMl5BanBnXkFtZTgwMjg0NTQ5MDE@._V1_.jpg',
-        contactInfo: {
-          email: 'sallystudent@stu.edu',
-          phone: '303-555-5555'
-        }
-      };
-
-      const App = props => {
-        console.log('Applicaiton is running...');
-
-        return (
-          <main id="app">
-            <header>
-              <h1>Resume App</h1>
-            </header>
-
-            <Contact name={props.name} photo={props.photo} />
-          </main>
-        );
-      };
-
-      ReactDOM.render(
-        <App name={user.name} photo={user.photo} email={user.email} />,
-        appRoot
+    const Header = props => {
+      return (
+        <div className='name'>
+          <h1>{props.name}</h1>
+          <h3 className='tagLine'>{props.tagLine}</h3>
+        </div>
       );
-    </script>
-  </body>
+    };
+
+    const BasicInfo = props => {
+      return (
+        <section id="profile">
+          <ProfilePhoto photo={props.photo} name={props.name} />
+          <ContactInfo name={props.name} tagLine={props.tagLine} email={props.email} phone={props.phone} />
+        </section>
+      );
+    };
+
+    const ProfilePhoto = props => {
+      return (
+        <div id="profilePhoto">
+          <img
+            src={props.photo}
+            alt={`${props.name}'s photo`}
+            className="responsiveImg"
+          />
+        </div>
+      );
+    };
+
+    const ContactInfo = props => {
+      return (
+
+        <div id="contactInfo">
+          <Header name={props.name} tagLine={props.tagLine} />
+          <h3 className="sectionTitle">Contact Information</h3>
+          <address>
+            <strong>Email: </strong>
+            <a href={`mailto:${props.email}`}>{props.email}</a>
+            <br />
+            <strong>Phone: </strong>
+            <a href="tel:+13035555555">{props.phone}</a>
+          </address>
+        </div>
+      );
+    };
+
+    const Education = props => {
+      return (
+        <section id='education'>
+          <h3>Education</h3>
+          <hr />
+          <p className='school'>
+            <strong>{props.school} | </strong>
+          </p>
+          <p className='major'>
+            <strong>Major: </strong>
+            {props.major}
+          </p>
+        </section>
+      );
+    };
+
+    const Experience = props => {
+      return (
+        <section id='experience'>
+          <h3>Employment History</h3>
+          <hr />
+          {props.experience.map((job, index) => (
+            <Job key={index} company={job.company} dates={job.dates} title={job.title} duties={job.duties} />
+          ))}
+        </section>
+      );
+    };
+
+    const Job = props => {
+      return (
+        <div className="job">
+          <p className='company'>
+            <strong>{props.company}</strong>
+          </p>
+          <h4 className='title'>{props.title} | </h4>
+          <p className='dates'>{props.dates}</p>
+          <p className='duties'>
+            <strong>Job Requirements</strong>
+          </p>
+          <p className='duties'>{props.duties}</p>
+        </div>
+      );
+    };
+
+    const user = {
+      name: 'Sally Student',
+      tagLine: 'An expereienced customer service representative',
+      photo:
+        'https://m.media-amazon.com/images/M/MV5BMTY5NzE3NzU3MF5BMl5BanBnXkFtZTgwMjg0NTQ5MDE@._V1_.jpg',
+      contactInfo: {
+        email: 'sallystudent@stu.edu',
+        phone: '303-555-5555'
+      },
+      education: {
+        school: 'Louisana State University',
+        major: 'Computer Science'
+      },
+      experience: [
+        {
+          company: 'Lockheed Martin',
+          dates: 'March 2013 - Present',
+          title: 'Sr. Engineer',
+          duties:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel facilisis lectus. Maecenas a lorem et neque sollicitudin maximus eu nec mauris. Nullam elementum laoreet facilisis. Fusce pretium metus risus, eget rhoncus ex lacinia non. Donec at aliquam felis. Praesent ornare orci vel odio semper consequat. Cras pharetra placerat eros sed vulputate. Etiam condimentum augue et eleifend tempus. Proin rhoncus est vulputate tellus facilisis semper.'
+        },
+        {
+          company: 'Lockheed Martin',
+          dates: 'October 2009 - March 2013',
+          title: 'Jr. Engineer',
+          duties:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel facilisis lectus. Maecenas a lorem et neque sollicitudin maximus eu nec mauris. Nullam elementum laoreet facilisis. Fusce pretium metus risus, eget rhoncus ex lacinia non. Donec at aliquam felis. Praesent ornare orci vel odio semper consequat. Cras pharetra placerat eros sed vulputate. Etiam condimentum augue et eleifend tempus. Proin rhoncus est vulputate tellus facilisis semper.'
+        }
+      ]
+    };
+
+    const App = props => {
+      return (
+        <main id="app">
+          <BasicInfo
+            name={props.name}
+            tagLine={props.tagLine}
+            photo={props.photo}
+            email={props.email}
+            phone={props.phone}
+          />
+          <Education school={props.school} major={props.major} />
+          <Experience experience={props.experience} />
+        </main>
+      );
+    };
+
+    ReactDOM.render(
+      <App
+        name={user.name}
+        tagLine={user.tagLine}
+        photo={user.photo}
+        email={user.contactInfo.email}
+        phone={user.contactInfo.phone}
+        school={user.education.school}
+        major={user.education.major}
+        experience={user.experience}
+      />,
+      appRoot
+    );
+  </script>
+</body>
+
 </html>
