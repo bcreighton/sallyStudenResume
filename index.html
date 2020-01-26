@@ -18,6 +18,7 @@
       const appRoot = document.querySelector('#application-root');
 
       const Contact = props => {
+        debugger;
         console.log(props);
 
         return (
@@ -69,7 +70,10 @@
         );
       };
 
-      ReactDOM.render(<App name={user.name} photo={user.photo} />, appRoot);
+      ReactDOM.render(
+        <App name={user.name} photo={user.photo} email={user.email} />,
+        appRoot
+      );
     </script>
   </body>
 </html>
